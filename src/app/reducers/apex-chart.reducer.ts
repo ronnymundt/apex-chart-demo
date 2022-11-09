@@ -14,8 +14,14 @@ export const ApexChartReducer = createReducer(
   initialState,
   on(
     ApexChartActions.getSeries,
-    (state, { series }) => {
-      return {...state, series }
+    (state: IApexChartState, { length }) => {
+      return {...state }
+    }
+  ),
+  on(
+    ApexChartActions.loadSeries,
+    (state: IApexChartState, { series }) => { 
+      return { ...state, series: series };
     }
   )
 

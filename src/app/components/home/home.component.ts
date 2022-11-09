@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { interval, map } from 'rxjs';
+import { ApexChartActions } from '../../actions/apex-chart.actions';
+import { IApexChartState } from '../../interfaces/apex-chart.interface';
 
 @Component({
   selector: 'home',
@@ -7,7 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _store: Store<IApexChartState>
+  ) { } 
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._initDispatcher();
+    setInterval(() => this._initDispatcher(), 2000);   
+  }
+
+  private _initDispatcher(): void { 
+      this._store.dispatch(ApexChartActions.getSeries({ length: 12 }));    
+  }
 }

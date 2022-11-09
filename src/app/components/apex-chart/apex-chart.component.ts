@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ChartComponent, ApexAxisChartSeries } from 'ng-apexcharts';
 import { ApexChartActions } from '../../actions/apex-chart.actions';
@@ -20,22 +20,24 @@ export class ApexChartComponent implements OnInit {
   public chartOptions: Partial<IChartOptions> | any;
 
   constructor(
-    private _store: Store<IApexChartState>,
-    private _demoser: ApexChartSeriesService
+    private _store: Store<IApexChartState>
   ) { }
 
   ngOnInit(): void {
-    this._initChart();
+    this._initChart();   
+    this._initSubscritions();
+  }
 
-    //
-    setInterval(() => this._updateData(), 2000); 
-    
-    //
-    this._store.select(selectApexChart).subscribe((x: IApexChartState) => {
-      if(!this.chart.hasOwnProperty('chart')) { return ; }      
+  // PRIVATE METHODES
 
-      this.chart.updateSeries(x.series);
-    });    
+  /**
+   * 
+   */
+  private _initSubscritions(): void {
+    this._store.select(selectApexChart).subscribe((x: IApexChartState) => {     
+      if(!this.chart.hasOwnProperty('chart')) { return; }
+      this.chart.updateSeries(x.series);      
+    }); 
   }
 
   /**
@@ -64,19 +66,6 @@ export class ApexChartComponent implements OnInit {
       tooltip: { theme: 'dark' },
       legend: { show: false }
     };
-  }
-  
-  /**
-   * 
-   */
-  private _updateData(): void {
-    const data = this._demoser.getRandomNumbersByLength(12);
-    let series: ApexAxisChartSeries = [{
-      data: data,
-      name: 'My-series'
-    }];     
-    
-    this._store.dispatch(ApexChartActions.getSeries({ series: series }));
   }
 
 }
