@@ -1,3 +1,44 @@
+:host {
+    display: block;
+    padding: 1rem;
+    box-sizing: border-box;    
+}
+
+h1 {    
+    display: flex;
+    justify-content: center;    
+}
+
+hr {
+    margin-bottom: 2rem;
+}
+
 div {
-    width: 500px;
+   display: grid;
+   grid-template-columns: 500px 435px 445px;
+   justify-content: center;
+}
+
+@media only screen and (max-width: 1396px) { 
+    div {     
+        grid-template-columns: 500px 435px;       
+    }
+}
+
+@media only screen and (max-width: 930px) { 
+    div {     
+        display: block;
+        width: 500px; 
+        margin: auto;
+    }
+
+    hr {
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 539px) { 
+    div {     
+        width: 350px;      
+    }
 }

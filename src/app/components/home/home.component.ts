@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
  
   ngOnInit(): void {    
     timer(0).pipe(take(1)).subscribe(() => this._initDispatcher()); // init. chart serie
-    this._interval = interval(3500).subscribe(() => this._initDispatcher());
+    this._interval = interval(5000).subscribe(() => this._initDispatcher()); // aktualisiert alle n-sekunden die daten im store
   }
 
   ngOnDestroy(): void {
@@ -32,6 +32,6 @@ export class HomeComponent implements OnInit, OnDestroy {
    * Methode init. die dispatcher
    */
   private _initDispatcher(): void { 
-      this._store.dispatch(ApexChartActions.getSeries({ length: 12 }));
+      this._store.dispatch(ApexChartActions.getSeries({ length: 5 }));
   }
 }
