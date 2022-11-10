@@ -1,26 +1,37 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { interval, map } from 'rxjs';
 import { ApexChartActions } from '../../actions/apex-chart.actions';
 import { IApexChartState } from '../../interfaces/apex-chart.interface';
+import { interval, Subscription, take, timer } from 'rxjs';
 
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  // PRIVATES
+  private _interval = Subscription.EMPTY;
 
   constructor(
     private _store: Store<IApexChartState>
   ) { } 
-
-  ngOnInit(): void {
-    this._initDispatcher();
-    setInterval(() => this._initDispatcher(), 2000);   
+ 
+  ngOnInit(): void {    
+    timer(0).pipe(take(1)).subscribe(() => this._initDispatcher()); // init. chart serie
+    this._interval = interval(3500).subscribe(() => this._initDispatcher());
   }
 
+  ngOnDestroy(): void {
+    this._interval.unsubscribe();
+  }
+
+  // PRIVATE METHODES
+
+  /**
+   * Methode init. die dispatcher
+   */
   private _initDispatcher(): void { 
-      this._store.dispatch(ApexChartActions.getSeries({ length: 12 }));    
+      this._store.dispatch(ApexChartActions.getSeries({ length: 12 }));
   }
 }

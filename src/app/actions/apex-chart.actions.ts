@@ -1,4 +1,4 @@
-import { createAction, createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 import { ApexAxisChartSeries } from 'ng-apexcharts';
 
 export const ApexChartActions = createActionGroup({

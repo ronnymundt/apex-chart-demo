@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { ApexAxisChartSeries } from 'ng-apexcharts';
-import { from, map, mergeMap, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ApexChartActions } from '../actions/apex-chart.actions';
 import { ApexChartSeriesService } from '../services/apex-chart-series.service';
 

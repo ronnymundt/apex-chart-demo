@@ -1,4 +1,4 @@
-import { Action, createReducer, on, State } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { ApexAxisChartSeries } from 'ng-apexcharts';
 import { ApexChartActions } from '../actions/apex-chart.actions';
 import { IApexChartState } from '../interfaces/apex-chart.interface';
@@ -24,5 +24,4 @@ export const ApexChartReducer = createReducer(
       return { ...state, series: series };
     }
   )
-
 );

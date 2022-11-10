@@ -10,6 +10,12 @@ export class ApexChartSeriesService {
 
   // PRIVATE METHODES
 
+  /**
+   * Methode liefet eine zufällige Zahl innerhalb einer range.
+   * @param min 
+   * @param max 
+   * @returns 
+   */
   private _getRandomBetweenByMinMax(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min)) + min;
   }
@@ -17,15 +23,15 @@ export class ApexChartSeriesService {
   // PUBLIC METHODES
 
   /**
-   * 
-   * @param length 
+   * Methode liefert eine zufällig apex chart serie.
+   * @param length länge der Serie 1 - n
    * @returns 
    */
   public getRandomChartSerieByLength(length: number): ApexAxisChartSeries {
-    const data = new Array(length).fill(0).map(x => this._getRandomBetweenByMinMax(-100, 100));
+    const data = new Array(length).fill(0).map(() => this._getRandomBetweenByMinMax(-100, 100));
     const series: ApexAxisChartSeries = [{
       data: data,
-      name: ''
+      name: 'Random Chart'
     }]; 
     return series;
   }  

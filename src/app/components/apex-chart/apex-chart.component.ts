@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ChartComponent, ApexAxisChartSeries } from 'ng-apexcharts';
+import { ApexOptions, ChartComponent } from 'ng-apexcharts';
 import { ApexChartActions } from '../../actions/apex-chart.actions';
-import { IChartOptions, IApexChartState } from '../../interfaces/apex-chart.interface';
+import { IApexChartState } from '../../interfaces/apex-chart.interface';
 import { selectApexChart } from '../../selectors/apex-chart.selectors';
-import { ApexChartSeriesService } from '../../services/apex-chart-series.service';
 
 @Component({
   selector: 'apex-chart',
@@ -17,15 +16,16 @@ export class ApexChartComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent = <ChartComponent>{} ;
 
   // PUBLICS
-  public chartOptions: Partial<IChartOptions> | any;
+  public chartOptions: ApexOptions = <ApexOptions> {};
 
   constructor(
     private _store: Store<IApexChartState>
   ) { }
 
-  ngOnInit(): void {
-    this._initChart();   
+  ngOnInit(): void {    
+    this._initChartOptions();   
     this._initSubscritions();
+    this._store.dispatch(ApexChartActions.getSeries({ length: 12 })); // dispatch init. value serie
   }
 
   // PRIVATE METHODES
@@ -34,21 +34,21 @@ export class ApexChartComponent implements OnInit {
    * 
    */
   private _initSubscritions(): void {
-    this._store.select(selectApexChart).subscribe((x: IApexChartState) => {     
+    this._store.select(selectApexChart).subscribe((x: IApexChartState) => {          
       if(!this.chart.hasOwnProperty('chart')) { return; }
       this.chart.updateSeries(x.series);      
     }); 
   }
 
   /**
-   * 
+   * Methode init. die apex chart options.
    */
-  private _initChart(): void {
+  private _initChartOptions(): void {
     this.chartOptions = {
       series: [
         {
           name: 'My-series',
-          data: [null, null, null, null, null, null, null, null, null, null, null, null]
+          data: []
         }
       ],
       chart: {
@@ -63,9 +63,16 @@ export class ApexChartComponent implements OnInit {
           'Jan', 'Feb',  'Mar',  'Apr',  'May',  'Jun',  'Jul',  'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
         ]
       },
-      tooltip: { theme: 'dark' },
+      yaxis: {
+        min: -100,
+        max: 100
+      },
+      dataLabels: {
+        enabled: false
+      },
+      tooltip: { theme: 'dark' },      
+      theme: { mode: 'dark' },
       legend: { show: false }
     };
   }
-
 }
