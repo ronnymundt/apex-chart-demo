@@ -5,7 +5,7 @@ import { IApexChartState } from '../../interfaces/apex-chart.interface';
 import { interval, Subscription, take, timer } from 'rxjs';
 
 @Component({
-  selector: 'home',
+  selector: 'bit-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

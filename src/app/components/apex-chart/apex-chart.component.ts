@@ -8,7 +8,7 @@ import { selectApexChart } from '../../selectors/apex-chart.selectors';
 import { TChartTypes } from '../../types/apex-chart.types';
 
 @Component({
-  selector: 'apex-chart',
+  selector: 'bit-apex-chart',
   templateUrl: './apex-chart.component.html',
   styleUrls: ['./apex-chart.component.scss']
 })
