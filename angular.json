@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "apex-chart-demo:build:production"
+              "buildTarget": "apex-chart-demo:build:production"
             },
             "development": {
-              "browserTarget": "apex-chart-demo:build:development"
+              "buildTarget": "apex-chart-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "apex-chart-demo:build"
+            "buildTarget": "apex-chart-demo:build"
           }
         },
         "test": {
@@ -108,7 +108,6 @@
     }
   },
   "cli": {
-    "defaultCollection": "@ngrx/schematics",
     "schematicCollections": [
       "@ngrx/schematics"
     ]
