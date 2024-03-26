@@ -5,6 +5,6 @@ export const ApexChartActions = createActionGroup({
   source: 'ApexChart',
   events: {
     'Get Series':  props<{ length: number }>(),
-    'Load Series': props<{ series: ApexAxisChartSeries }>()
+    'Set Series': props<{ series: ApexAxisChartSeries }>()
   }
 });

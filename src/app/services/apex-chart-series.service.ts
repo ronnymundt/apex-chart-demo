@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-import { ApexAxisChartSeries } from 'ng-apexcharts';
+import {Injectable} from '@angular/core';
+import {ApexAxisChartSeries} from 'ng-apexcharts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApexChartSeriesService {
-
-  constructor() { }
-
   // PRIVATE METHODES
 
   /**
    * Methode liefet eine zufällige Zahl innerhalb einer range.
-   * @param min 
-   * @param max 
-   * @returns 
+   * @param min
+   * @param max
+   * @returns
    */
   private _getRandomBetweenByMinMax(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -25,14 +22,13 @@ export class ApexChartSeriesService {
   /**
    * Methode liefert eine zufällig apex chart serie.
    * @param length länge der Serie 1 - n
-   * @returns 
+   * @returns
    */
-  public getRandomChartSerieByLength(length: number): ApexAxisChartSeries {
+  getRandomChartSerieByLength(length: number): ApexAxisChartSeries {
     const data = new Array(length).fill(0).map(() => this._getRandomBetweenByMinMax(-100, 100));
-    const series: ApexAxisChartSeries = [{
+    return [{
       data: data,
       name: 'Random Chart'
-    }]; 
-    return series;
-  }  
+    }];
+  }
 }
