@@ -1,29 +1,25 @@
-import {
-  Component,
-  DestroyRef,
-  OnInit
-} from '@angular/core';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-import {interval} from 'rxjs';
-import {ApexChartActions, IApexChartState} from "../../+state/apex-chart";
+import { interval } from 'rxjs';
+import { ApexChartActions, IApexChartState } from '../../+state/apex-chart';
 import { ApexChartComponent } from '../apex-chart/apex-chart.component';
 
 @Component({
-    selector: 'bit-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    standalone: true,
-    imports: [ApexChartComponent]
+  selector: 'bit-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [ApexChartComponent],
 })
 export class HomeComponent implements OnInit {
   constructor(
     private store: Store<IApexChartState>,
-    private destroyRef: DestroyRef
-  ) { }
+    private destroyRef: DestroyRef,
+  ) {}
 
   ngOnInit(): void {
-    this.dispatchChartSerie()
+    this.dispatchChartSerie();
     this.initSubs();
   }
 
@@ -34,6 +30,6 @@ export class HomeComponent implements OnInit {
   }
 
   private dispatchChartSerie(): void {
-      this.store.dispatch(ApexChartActions.getSeries({ length: 5 }));
+    this.store.dispatch(ApexChartActions.getSeries({ length: 5 }));
   }
 }

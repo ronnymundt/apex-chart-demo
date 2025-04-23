@@ -9,16 +9,18 @@ import { ApexChartSeriesService } from '../../services/apex-chart-series.service
 export class ApexChartEffects {
   constructor(
     private actions$: Actions,
-    private acsService: ApexChartSeriesService
+    private acsService: ApexChartSeriesService,
   ) {}
 
-  public getApexSeries$: Observable<Action> = createEffect(() => {
+  getApexSeries$: Observable<Action> = createEffect(() => {
     return this.actions$.pipe(
       ofType(ApexChartActions.getSeries),
       map((action) => {
-        const series = this.acsService.getRandomChartSerieByLength(action.length);
+        const series = this.acsService.getRandomChartSerieByLength(
+          action.length,
+        );
         return ApexChartActions.setSeries({ series });
-      })
-    )
+      }),
+    );
   });
 }

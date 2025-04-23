@@ -6,15 +6,12 @@ import { IApexChartState } from './apex-chart.model';
 export const apexChartFeatureKey = 'apexChartState';
 
 export const initialState: IApexChartState = {
-  series: <ApexAxisChartSeries>{}
+  series: <ApexAxisChartSeries>{},
 };
 
 export const apexChartReducer = createReducer(
   initialState,
-  on(
-    ApexChartActions.setSeries,
-    (state: IApexChartState, { series }) => {
-      return { ...state, series };
-    }
-  )
+  on(ApexChartActions.setSeries, (state: IApexChartState, { series }) => {
+    return { ...state, series };
+  }),
 );

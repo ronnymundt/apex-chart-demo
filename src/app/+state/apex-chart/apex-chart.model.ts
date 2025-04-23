@@ -1,5 +1,5 @@
-import {ApexAxisChartSeries} from "ng-apexcharts";
+import { ApexAxisChartSeries } from 'ng-apexcharts';
 
 export interface IApexChartState {
-  series: ApexAxisChartSeries
+  series: ApexAxisChartSeries;
 }
