@@ -2,13 +2,16 @@ import { Component, DestroyRef, Input, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import {
-  ApexAxisChartSeries,
   ApexOptions,
   ChartComponent,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { map } from 'rxjs';
-import { IApexChartState, selectApexChart } from '../../+state/apex-chart';
+import { delay } from 'rxjs';
+import {
+  IApexCharSerie,
+  IApexChartState,
+  selectApexChart,
+} from '../../+state/apex-chart';
 import { TChartTypes } from '../../types/apex-chart.types';
 
 @Component({
@@ -23,7 +26,7 @@ export class ApexChartComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent = <ChartComponent>{};
   chartOptions: ApexOptions = <ApexOptions>{};
 
-  private apexState$ = this.store.select(selectApexChart);
+  private apexState$ = this.store.select(selectApexChart).pipe(delay(500));
   private chartLabels: Array<string> = [
     'DEV 1',
     'DEV 2',
@@ -35,26 +38,23 @@ export class ApexChartComponent implements OnInit {
   constructor(
     private store: Store<IApexChartState>,
     private destroyRef: DestroyRef,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initChartOptions();
-    this.initSubs()
+    this.initSubs();
   }
 
   private initSubs() {
     this.apexState$
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        map(({ series }) =>
-          this.chartType === 'donut' || this.chartType === 'radialBar'
-            ? series[0].data
-            : series,
-        ),
-      )
-      .subscribe((x) => this.updateChartSeries(x));
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((x) => this.updateChartSeries(x.series));
   }
 
+  /**
+   * Methode initialisiert die Chart Optionen.
+   * @private
+   */
   private initChartOptions() {
     this.chartOptions = {
       series: [],
@@ -86,10 +86,30 @@ export class ApexChartComponent implements OnInit {
     };
   }
 
-  private updateChartSeries(series: ApexAxisChartSeries | any) {
+  /**
+   * Methode aktualisiert die Chart Serie.
+   * @param series
+   * @private
+   */
+  private updateChartSeries(series: IApexCharSerie) {
     if (!this.chart.hasOwnProperty('chart')) {
       return;
     }
-    this.chart.updateSeries(series).then();
+
+    // wenn bar chart dann mappe die Daten um
+    if (this.chartType === 'bar') {
+      const dd = series.data.map((s) => {
+        return {
+          x: series.name,
+          y: s,
+        };
+      });
+      //
+      this.chart.updateSeries([{ data: dd}]).then();
+      return;
+    }
+
+    // alle anderen charts
+    this.chart.updateSeries(series.data).then();
   }
 }

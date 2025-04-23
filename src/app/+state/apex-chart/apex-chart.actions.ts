@@ -1,10 +1,10 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { ApexAxisChartSeries } from 'ng-apexcharts';
+import { IApexCharSerie } from './apex-chart.model';
 
 export const ApexChartActions = createActionGroup({
   source: 'ApexChart',
   events: {
     GetSeries: props<{ length: number }>(),
-    SetSeries: props<{ series: ApexAxisChartSeries }>(),
+    SetSeries: props<{ series: IApexCharSerie }>(),
   },
 });

@@ -1,5 +1,8 @@
-import { ApexAxisChartSeries } from 'ng-apexcharts';
-
 export interface IApexChartState {
-  series: ApexAxisChartSeries;
+  series: IApexCharSerie;
+}
+
+export interface IApexCharSerie {
+  data: number[];
+  name: string;
 }

@@ -9,7 +9,6 @@ import { ApexChartComponent } from '../apex-chart/apex-chart.component';
   selector: 'bit-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  standalone: true,
   imports: [ApexChartComponent],
 })
 export class HomeComponent implements OnInit {
@@ -18,18 +17,18 @@ export class HomeComponent implements OnInit {
     private destroyRef: DestroyRef,
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.dispatchChartSerie();
     this.initSubs();
   }
 
-  private initSubs(): void {
+  private initSubs() {
     interval(7000)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.dispatchChartSerie());
   }
 
-  private dispatchChartSerie(): void {
+  private dispatchChartSerie() {
     this.store.dispatch(ApexChartActions.getSeries({ length: 5 }));
   }
 }

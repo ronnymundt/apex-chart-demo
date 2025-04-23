@@ -4,9 +4,8 @@ import { apexChartFeatureKey } from './apex-chart.reducer';
 
 export const selectApexChartState =
   createFeatureSelector<IApexChartState>(apexChartFeatureKey);
+
 export const selectApexChart = createSelector(
   selectApexChartState,
-  (state: IApexChartState) => {
-    return state;
-  },
+  (state: IApexChartState) => state,
 );
